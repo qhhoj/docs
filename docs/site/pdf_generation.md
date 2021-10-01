@@ -1,5 +1,7 @@
 # PDF Generation of Problem Statements
 
+!> Untested on VNOJ
+
 The DMOJ supports rendering problem statements to PDF. This can be useful in the case of on-site contests, where
 contestants receive paper versions of the problems.
 
