@@ -1,8 +1,6 @@
 # User Data Downloads
 
-!> Untested on VNOJ
-
-The DMOJ allows users to download their data. At the time of writing, only user comment and submission data can be downloaded.
+The VNOJ allows users to download their data. At the time of writing, only user comment and submission data can be downloaded.
 
 By default, this feature is disabled. To enable, uncomment the relevant settings in `local_settings.py`.
 
@@ -13,11 +11,11 @@ DMOJ_USER_DATA_DOWNLOAD = True
 
 # Directory to cache user data downloads.
 # It is the administrator's responsibility to clean up old files.
-DMOJ_USER_DATA_CACHE = '/home/dmoj-uwsgi/datacache'
+DMOJ_USER_DATA_CACHE = '/home/dmoj-uwsgi/userdatacache'
 
 # Path to use for nginx's X-Accel-Redirect feature.
 # Should be an internal location mapped to the above directory.
-DMOJ_USER_DATA_INTERNAL = '/datacache'
+DMOJ_USER_DATA_INTERNAL = '/userdatacache'
 
 # How often a user can download their data.
 DMOJ_USER_DATA_DOWNLOAD_RATELIMIT = datetime.timedelta(days=1)
@@ -30,19 +28,20 @@ feature.
 ```nginx
 # Uncomment if you are allowing user data downloads and want to serve it faster.
 # This location name should be set to DMOJ_USER_DATA_INTERNAL.
-location /datacache {
+location /userdatacache {
     internal;
-    root <path to data cache directory, without the final /datacache>;
+    root <path to data cache directory, without the final /userdatacache>;
+
     # Default from local_settings.py:
     #root /home/dmoj-uwsgi/;
 }
 ```
 
 These data files are not cleaned up automatically. Although each user can have at most one data file
-stored on the server at a time, you may want to clean up old files. A cron job should suffice:
+stored on the server at a time, you may want to clean up old files. A Cron job should suffice:
 
 ```
-0 */4 * * * find /home/dmoj-uwsgi/datacache/ -type f -mtime 2 -delete
+0 */4 * * * find /home/dmoj-uwsgi/userdatacache/ -type f -mtime 2 -delete
 ```
 
 This cron job will delete files older than 2 days every 4 hours. You are recommended to tweak these
