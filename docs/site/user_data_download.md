@@ -41,7 +41,7 @@ These data files are not cleaned up automatically. Although each user can have a
 stored on the server at a time, you may want to clean up old files. A Cron job should suffice:
 
 ```
-0 */4 * * * find /home/dmoj-uwsgi/userdatacache/ -type f -mtime 2 -delete
+0 */4 * * * find /home/dmoj-uwsgi/userdatacache/ -type f -mtime +2 -delete
 ```
 
 This cron job will delete files older than 2 days every 4 hours. You are recommended to tweak these
