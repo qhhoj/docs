@@ -59,7 +59,7 @@ $ make judge-tier1
 $ docker run \
     -v /mnt/problems:/problems \
     --cap-add=SYS_PTRACE \
-    dmoj/judge-tier1:latest \
+    vnoj/judge-tier1:latest \
     cli -c /problems/judge.yml
 ```
 
@@ -70,12 +70,12 @@ modify this to suit your installation requirements.
 ```shell-session
 $ docker run \
     --name judge \
-    -p "$(ip addr show dev enp1s0 | perl -ne 'm@inet (.*)/.*@ and print$1 and exit')":9998:9998 \
+    --network="host" \
     -v /mnt/problems:/problems \
     --cap-add=SYS_PTRACE \
     -d \
     --restart=always \
-    dmoj/judge-tier1:latest \
+    vnoj/judge-tier1:latest \
     run -p "$PORT" -c /problems/judge.yml \
     "$IP" "$JUDGE_NAME" "$JUDGE_AUTHENTICATION_KEY"
 ```
@@ -109,8 +109,7 @@ id: <judge name>
 key: <judge authentication key>
 problem_storage_root:
   - /mnt/problems
-runtime:
-   ...
+runtime: ...
 ```
 
 You should now be able to run `dmoj-cli -c judge.yml` to enter a CLI
