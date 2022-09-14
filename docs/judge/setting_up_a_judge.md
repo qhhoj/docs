@@ -47,25 +47,25 @@ runtimes we run on [dmoj.ca](https://dmoj.ca). Tier 2 contains some in-between
 mix; read the `Dockerfile` for each tier for details. These images are rebuilt
 and tested every week to contain the latest runtime versions.
 
-The session below starts a CLI instance you can use to test the judge before
-connecting it to the site. It expects problems to be placed on the host under
-`/mnt/problems`, and judge-specific configuration to be in
-`/mnt/problems/judge.yml`.
+The session below build a `judge-tier1`:
 
 ```shell-session
 $ git clone --recursive https://github.com/VNOI-Admin/judge-server.git
 $ cd judge/.docker
 $ make judge-tier1
-$ docker run \
-    -v /mnt/problems:/problems \
-    --cap-add=SYS_PTRACE \
-    vnoj/judge-tier1:latest \
-    cli -c /problems/judge.yml
 ```
 
-The session below spawns a tier 1 judge image. It expects the relevant
-environment variables to be set, and the network device to be `enp1s0`. You can
-modify this to suit your installation requirements.
+The session below spawns a tier 1 judge image in the same server as the site server.
+**It expects problems to be placed on the host under `/mnt/problems`, and judge-specific
+configuration to be in `/mnt/problems/judge.yml`.**
+
+Here is an example `judge.yml`:
+```yaml
+id: Judge1
+key: a_random_key
+problem_storage_root:
+  - /problems
+```
 
 ```shell-session
 $ docker run \
@@ -76,61 +76,19 @@ $ docker run \
     -d \
     --restart=always \
     vnoj/judge-tier1:latest \
-    run -p "$PORT" -c /problems/judge.yml \
-    "$IP" "$JUDGE_NAME" "$JUDGE_AUTHENTICATION_KEY"
+    run -p 9999 -c /problems/judge.yml localhost  -A 0.0.0.0  -a 12345
 ```
 
-`$PORT` and `$IP` should be the port and IP that was specified in
-`BRIDGED_JUDGE_ADDRESS` of the site's `local_settings.py`.
+If you changed the port that was specified in `BRIDGED_JUDGE_ADDRESS` of the
+site's `local_settings.py`, you need to change the `-p 9999` to match the config as well
 
-`$JUDGE_NAME` is the judge name as specified in the site, and
-`$JUDGE_AUTHENTICATION_KEY` is the judge authentication key.
+If you want to run multiple judges, you need to changes:
+- Container name (`--name judge`): each judge need different name
+- judge.yml file (`/problems/judge.yml`): each judge need different config file
+- `-a 12345`: change to others ports
 
 ### Through PyPI
 
 !> Not available for VNOJ
 
-#### Installing the prerequisites
-
-```shell-session
-$ apt install python3-dev python3-pip build-essential libseccomp-dev
-$ pip3 install dmoj
-```
-
-#### Configuring the judge
-
-Start by taking the `runtime` block from the output of the command
-`dmoj-autoconf` and put it in a new file `judge.yml`. Next, add a
-`problem_storage_root` node where you specify where your problem data is
-located. Your `judge.yml` file should look something like below.
-
-```yaml
-id: <judge name>
-key: <judge authentication key>
-problem_storage_root:
-  - /mnt/problems
-runtime: ...
-```
-
-You should now be able to run `dmoj-cli -c judge.yml` to enter a CLI
-environment for the judge. For additional configuration options, an [example
-configuration
-file](https://github.com/VNOI-Admin/vnoj-docs/blob/master/sample_files/judge_conf.yml) is
-provided.
-
-You should now be able to connect the judge to the site.
-
-```shell-session
-$ dmoj -c judge.yml -p "$PORT" "$IP"
-```
-
-`$PORT` and `$IP` should be the port and IP that was specified in
-`BRIDGED_JUDGE_ADDRESS` of the site's `local_settings.py`. If the port is 9999,
-you can exclude the `-p PORT` argument, as the judge will default to port 9999.
-
-If you are using the defaults in `local_settings.py`, the following command
-should suffice.
-
-```shell-session
-$ dmoj -c judge.yml localhost
-```
+We are not maintaining our judge on PyPI, you should use the docker setup above.
