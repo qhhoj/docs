@@ -96,7 +96,7 @@ Variables in global scope will exist throughout the grading process.
 - `problem_id`: the problem code.
 
 Additionally, if the `check` method has the flag `run_on_error` set, it will be run against the submission's output, even if it receives an IR/TLE/RTE/MLE verdict.
-The only built-in checker that has this flag set is the `linecount` checker.
+~~The only built-in checker that has this flag set is the `linecount` checker.~~ (Removed in [this commit](https://github.com/VNOI-Admin/judge-server/commit/d0336f681f1bbf52a5e133a05ce2a2f8a78dc2d5))
 
 ### Returns
 
