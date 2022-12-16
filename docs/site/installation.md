@@ -10,7 +10,7 @@ $ npm install -g sass postcss-cli postcss autoprefixer
 
 ## Creating the database
 
-Next, we will set up the database using MariaDB. The VNOJ is only tested to work with MySQL, and it is unlikely to work with anything else. Please visit [the MariaDB site](https://downloads.mariadb.org/mariadb/repositories/) and follow the download instructions.
+Next, we will set up the database using MariaDB. The VNOJ is only tested to work with MySQL, and it is unlikely to work with anything else. Please visit [the MariaDB site](https://mariadb.org/download/?t=repo-config) and follow the download instructions.
 
 When asked, you should select the latest MariaDB version.
 
@@ -36,12 +36,7 @@ Now that you are done, you can start installing the site. First, create a virtua
 $ python3 -m venv vnojsite
 $ . vnojsite/bin/activate
 ```
-<<<<<<< HEAD
-=======
-You should see `(vnojsite)` prepended to your shell. Henceforth, `(vnojsite)` commands assumes you are in the code directory, with virtual environment active.
->>>>>>> Basic docs for VNOJ (#1)
-
-You should see `(dmojsite)` prepended to your shell. Henceforth, `(dmojsite)` commands assume you are in the code directory, with the virtual environment active.
+You should see `(vnojsite)` prepended to your shell. Henceforth, `(vnojsite)` commands assume you are in the code directory, with the virtual environment active.
 
 ?> The virtual environment will help keep the modules needed separate from the system package manager, and save you many headaches when updating. Read more about virtual environments [here](https://docs.python.org/3/tutorial/venv.html).
 

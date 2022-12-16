@@ -40,6 +40,10 @@ For normal cases, the test case will contain keys `in` and `out`, mapping to the
 ## Batched Cases
 The batch will contain the keys `points` and `batched`. `batched` will map to a list of batched cases, where each case contains `in` and `out`.
 
+Optionally, the batch can contain a key `dependencies`. If specified, it should be a list of integers, indicating the one-indexed batch numbers that the batch depends on. This batch will only run if all of the dependent batches passed. The sample `init.yml` below is set up so the last batch only runs if the first two passed.
+
+Note that if short circuit is enabled, it overrides this setting, i.e., a failed case implies immediate judging termination. Pretests (cases or batches with `points: 0`) also still imply immediate judging termination.
+
 Below is a sample `init.yml`:
 
 ```yaml
@@ -55,7 +59,11 @@ test_cases:
   batched:
   - {in: tle16p4.2.in, out: tle16p4.2.out}
   - {in: tle16p4.3.in, out: tle16p4.3.out}
-
+- points: 10
+  batched:
+  - {in: tle16p4.4.in, out: tle16p4.4.out}
+  - {in: tle16p4.5.in, out: tle16p4.5.out}
+  dependencies: [1, 2]
 ```
 
 As VNOJ's YAML dialect supports dynamic keys, large `init.yml`s can be programmatically generated.
@@ -66,7 +74,8 @@ If the test cases follow a similar format, it is possible to specify them with a
 
 The default regex for input files is `^(?=.*?\.in|in).*?(?:(?:^|\W)(?P<batch>\d+)[^\d\s]+)?(?P<case>\d+)[^\d\s]*$`, and the default regex for output files is `^(?=.*?\.out|out).*?(?:(?:^|\W)(?P<batch>\d+)[^\d\s]+)?(?P<case>\d+)[^\d\s]*$`.
 
-Some examples of fie formats they can match are:
+Some examples of file formats they can match are:
+
 ```
 test.1.in
 test-1.in
@@ -81,13 +90,15 @@ problem-1-case-1-batch-2.in
 Where the first three are standalone cases (i.e. not in a batch) and the latter
 four are batched.
 
-Note that non-batched cases treat their case number as their batch number, i.e
+Note that non-batched cases treat their case number as their batch number, e.g.
+
 ```
 1.in
 2.1.in
 2.2.in
 3.in
 ```
+
 would be sorted in this order by the judge.
 
 These can be overwritten by specifying `input_format` and `output_format` within `test_cases`, respectively.

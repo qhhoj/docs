@@ -1,4 +1,4 @@
-# About
+# API
 
 !> Untested on VNOJ
 
@@ -180,13 +180,13 @@ Example: [/api/v2/contest/bts19](https://dmoj.ca/api/v2/contest/bts19)
             "start_time": "<effective participation start time in ISO format>",
             "end_time": "<participation end time in ISO format>",
             "score": "<participant score>",
-            "cumulative_time": "<participant cumulative time, dependant on the contest format>",
+            "cumulative_time": "<participant cumulative time, dependent on the contest format>",
             "tiebreaker": "<participant tiebreaker value>",
             "old_rating": "<participant rating before the contest, or null if not rated>",
             "new_rating": "<participant rating after the contest, or null if not rated>",
             "is_disqualified": "<whether this participant is disqualified>",
             "solutions": [
-                "<list of contest format-dependant dictionaries for individual problem scores>"
+                "<list of contest format-dependent dictionaries for individual problem scores>"
             ]
         }
     ]
@@ -213,7 +213,7 @@ Example: [/api/v2/participations?contest=dmopc19c6&virtual_participation_number=
     "start_time": "<effective participation start time in ISO format>",
     "end_time": "<participation end time in ISO format>",
     "score": "<participant score>",
-    "cumulative_time": "<participant cumulative time, dependant on the contest format>",
+    "cumulative_time": "<participant cumulative time, dependent on the contest format>",
     "tiebreaker": "<participant tiebreaker value>",
     "is_disqualified": "<whether this participant is disqualified>",
     "virtual_participation_number": "<virtual participation number>"
@@ -346,7 +346,7 @@ Example: [/api/v2/user/Xyene](https://dmoj.ca/api/v2/user/Xyene)
         {
             "key": "<contest key>",
             "score": "<user score>",
-            "cumulative_time": "<user cumulative time, dependant on the contest format>",
+            "cumulative_time": "<user cumulative time, dependent on the contest format>",
             "rating": "<user rating after this contest, or null if not rated>",
             "raw_rating": "<user raw rating after this contest, or null if not rated>",
             "performance": "<user performance, or null if not rated>"
@@ -413,7 +413,7 @@ Example: [/api/v2/submission/1000000](https://dmoj.ca/api/v2/submission/1000000)
 
 #### Additional Info
 
-`case or batch data`: Each object will be one of the following, depending on whether the current case is a batch or a single testcase:
+`case or batch data`: Each object will be one of the following, depending on whether the current case is a batch or a single test case:
 
 #### Case Data
 
@@ -526,7 +526,7 @@ Example: [/api/problem/list](https://dmoj.ca/api/problem/list)
 }
 ```
 
-Data is equivalent to what may be obtained by parsing [/problems](https://dmoj.ca/problems).
+Data is equivalent to what may be obtained by parsing [/problems/](https://dmoj.ca/problems/).
 
 ### `/api/problem/info/<code>` — Fetches problem-specific info
 

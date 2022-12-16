@@ -27,4 +27,4 @@
   - [Problem Examples](problem_format/problem_examples.md)
 
 - About
- - [License](about/LICENSE.md)
+  - [License](about/LICENSE.md)

@@ -1,4 +1,4 @@
-## VNOJ: Modern Online Judge
+# VNOJ: Modern Online Judge
 
 This documentation aims to guide you through installing your own VNOJ instance.
 
