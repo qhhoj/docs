@@ -1,4 +1,5 @@
-# Updating the Site
+# Updating the site
+
 The VNOJ is under active development, so occasionally you may wish to update. This is a fairly simple process.
 
 !>  The VNOJ development team makes no commitment to backwards compatibility. It's possible that an update migration

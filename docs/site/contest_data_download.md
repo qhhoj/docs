@@ -1,4 +1,4 @@
-# Contest Data Downloads
+# Contest data downloads
 
 The VNOJ allows contest authors to download contest data. At the time of writing, only submission data can be downloaded.
 

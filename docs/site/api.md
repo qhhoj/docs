@@ -7,23 +7,23 @@ The DMOJ supports a simple JSON API for accessing most data used by the backend.
 - [API v2](#dmoj-api-v2) - A more rich API that returns user-specific data. This version fully utilizes API tokens.
 - [API v1](#dmoj-api-v1) - Most data returned here are accessible by any user. This version may be deprecated in the future.
 
-## API Tokens
+## API tokens
 
-The DMOJ supports API tokens for accessing the majority of the site as your native user, in addition to both API versions. The admin portion of the site is left intentionally inaccessible with these tokens. You may generate an API token on your *Edit Profile* page. To use, include the following header with every request where `<API Token>` is your API token:
+The DMOJ supports API tokens for accessing the majority of the site as your native user, in addition to both API versions. The admin portion of the site is left intentionally inaccessible with these tokens. You may generate an API token on your *Edit profile* page. To use, include the following header with every request where `<API Token>` is your API token:
 
 ```http
 Authorization: Bearer <API Token>
 ```
 
-### Error Responses
+### Error responses
 
 The following error codes may be returned by the API token authentication layer. Note that the site itself may return other codes not listed here or identical codes with different error messages, so read the error messages carefully.
 
 - `400 Invalid authorization header` - The **header** you provided is invalid. Make sure it matches the following regex: `Authorization: Bearer ([a-zA-Z0-9_-]{48})`
-- `401 Invalid token` - The **token** you provided is invalid. Make sure it matches the one on your *Edit Profile* page.
+- `401 Invalid token` - The **token** you provided is invalid. Make sure it matches the one on your *Edit profile* page.
 - `403 Admin inaccessible` - You are trying to access the inaccessible admin portion of the site.
 
-## Rate Limiting
+## Rate limiting
 
 **90 requests per minute**
 
@@ -51,7 +51,7 @@ All responses are of the following structure:
 
 It is guaranteed that only one of `data` or `error` will be in the response.
 
-### Error Format
+### Error format
 
 ```json
 {
@@ -62,7 +62,7 @@ It is guaranteed that only one of `data` or `error` will be in the response.
 }
 ```
 
-### Data Format
+### Data format
 
 The data format differs depending on the endpoint called. For endpoints that respond with a single object:
 
@@ -105,16 +105,16 @@ Example of list filtering: `/api/v2/problems?organization=1&organization=2&type=
 
 Example: [/api/v2/contests?tag=seasonal&tag=dmopc](https://dmoj.ca/api/v2/contests?tag=seasonal&tag=dmopc)
 
-#### Basic Filters
+#### Basic filters
 
 - `is_rated` - boolean
 
-#### List Filters
+#### List filters
 
 - `tag` - tag name
 - `organization` - organization id
 
-#### Object Response
+#### Object response
 
 ```json
 {
@@ -135,7 +135,7 @@ Example: [/api/v2/contests?tag=seasonal&tag=dmopc](https://dmoj.ca/api/v2/contes
 
 Example: [/api/v2/contest/bts19](https://dmoj.ca/api/v2/contest/bts19)
 
-#### Object Response
+#### Object response
 
 ```json
 {
@@ -197,14 +197,14 @@ Example: [/api/v2/contest/bts19](https://dmoj.ca/api/v2/contest/bts19)
 
 Example: [/api/v2/participations?contest=dmopc19c6&virtual_participation_number=0&is_disqualified=True](https://dmoj.ca/api/v2/participations?contest=dmopc19c6&virtual_participation_number=0&is_disqualified=True)
 
-#### Basic Filters
+#### Basic filters
 
 - `contest` - contest key
 - `user` - user username
 - `is_disqualified` - boolean
 - `virtual_participation_number` - non-negative integer
 
-#### Object Response
+#### Object response
 
 ```json
 {
@@ -224,21 +224,21 @@ Example: [/api/v2/participations?contest=dmopc19c6&virtual_participation_number=
 
 Example: [/api/v2/problems?partial=True&type=Uncategorized](https://dmoj.ca/api/v2/problems?partial=True&type=Uncategorized)
 
-#### Basic Filters
+#### Basic filters
 
 - `partial` - boolean
 
-#### List Filters
+#### List filters
 
 - `group` - problem group full name
 - `type` - problem type full name
 - `organization` - organization id
 
-#### Additional Filters
+#### Additional filters
 
 - `search` - similar to a list filter, except searches for the list of parameters in the problem's name, code, and description.
 
-#### Object Response
+#### Object response
 
 ```json
 {
@@ -259,7 +259,7 @@ Example: [/api/v2/problems?partial=True&type=Uncategorized](https://dmoj.ca/api/
 
 Example: [/api/v2/problem/helloworld](https://dmoj.ca/api/v2/problem/helloworld)
 
-#### Object Response
+#### Object response
 
 ```json
 {
@@ -295,7 +295,7 @@ Example: [/api/v2/problem/helloworld](https://dmoj.ca/api/v2/problem/helloworld)
 }
 ```
 
-#### Additional Info
+#### Additional info
 
 `is_public`: Whether the problem is publicly visible to the organizations listed. If `is_organization_private` is `false`, the problem is visible to all users.
 
@@ -303,11 +303,11 @@ Example: [/api/v2/problem/helloworld](https://dmoj.ca/api/v2/problem/helloworld)
 
 Example: [/api/v2/users?organization=8](https://dmoj.ca/api/v2/users?organization=8)
 
-#### List Filters
+#### List filters
 
 - `organization` - organization id
 
-#### Object Response
+#### Object response
 
 ```json
 {
@@ -325,7 +325,7 @@ Example: [/api/v2/users?organization=8](https://dmoj.ca/api/v2/users?organizatio
 
 Example: [/api/v2/user/Xyene](https://dmoj.ca/api/v2/user/Xyene)
 
-#### Object Response
+#### Object response
 
 ```json
 {
@@ -359,17 +359,17 @@ Example: [/api/v2/user/Xyene](https://dmoj.ca/api/v2/user/Xyene)
 
 Example: [/api/v2/submissions?user=Ninjaclasher](https://dmoj.ca/api/v2/submissions?user=Ninjaclasher)
 
-#### Basic Filters
+#### Basic filters
 
 - `user` - user username
 - `problem` - problem code
 
-#### List Filters
+#### List filters
 
 - `language` - language key
 - `result` - string
 
-#### Object Response
+#### Object response
 
 ```json
 {
@@ -389,7 +389,7 @@ Example: [/api/v2/submissions?user=Ninjaclasher](https://dmoj.ca/api/v2/submissi
 
 Example: [/api/v2/submission/1000000](https://dmoj.ca/api/v2/submission/1000000)
 
-#### Object Response
+#### Object response
 
 ```json
 {
@@ -411,11 +411,11 @@ Example: [/api/v2/submission/1000000](https://dmoj.ca/api/v2/submission/1000000)
 }
 ```
 
-#### Additional Info
+#### Additional info
 
 `case or batch data`: Each object will be one of the following, depending on whether the current case is a batch or a single test case:
 
-#### Case Data
+#### Case data
 
 ```json
 {
@@ -429,7 +429,7 @@ Example: [/api/v2/submission/1000000](https://dmoj.ca/api/v2/submission/1000000)
 }
 ```
 
-#### Batch Data
+#### Batch data
 
 ```json
 {
@@ -447,11 +447,11 @@ Example: [/api/v2/submission/1000000](https://dmoj.ca/api/v2/submission/1000000)
 
 Example: [/api/v2/organizations?is_open=False](https://dmoj.ca/api/v2/organizations?is_open=False)
 
-#### Basic Filters
+#### Basic filters
 
 - `is_open` - boolean
 
-#### Object Response
+#### Object response
 
 ```json
 {
@@ -467,11 +467,11 @@ Example: [/api/v2/organizations?is_open=False](https://dmoj.ca/api/v2/organizati
 
 Example: [/api/v2/languages?common_name=Python](https://dmoj.ca/api/v2/languages?common_name=Python)
 
-#### Basic Filters
+#### Basic filters
 
 - `common_name` - language common name
 
-#### Object Response
+#### Object response
 
 ```json
 {
@@ -489,7 +489,7 @@ Example: [/api/v2/languages?common_name=Python](https://dmoj.ca/api/v2/languages
 
 Example: [/api/v2/judges](https://dmoj.ca/api/v2/judges)
 
-#### Object Response
+#### Object response
 
 ```json
 {
@@ -513,7 +513,7 @@ Example: [/api/v2/judges](https://dmoj.ca/api/v2/judges)
 
 Example: [/api/problem/list](https://dmoj.ca/api/problem/list)
 
-#### Object Response
+#### Object response
 
 ```json
 {
@@ -532,7 +532,7 @@ Data is equivalent to what may be obtained by parsing [/problems/](https://dmoj.
 
 Example: [/api/problem/info/helloworld](https://dmoj.ca/api/problem/info/helloworld)
 
-#### Object Response
+#### Object response
 
 ```json
 {

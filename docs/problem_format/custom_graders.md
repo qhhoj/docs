@@ -1,6 +1,6 @@
-# Custom Graders
+# Custom graders
 
-## Custom Grader Behaviour - `grader`
+## Custom grader behaviour
 
 An `init.yml` object can contain a top-level `custom_judge` node, which contains a path to a Python file to be executed as a grader for the problem. The grader has access to the archive specified in `archive`.
 
@@ -83,7 +83,7 @@ Since we use no input or output files (our test case is hardcoded), we do not ne
 
 In this example, it's important to note the `unbuffered` node. If set to `true`, the judge will use a pseudoterminal device for a submission's input and output pipes. Since ptys are not buffered by design, setting `unbuffered` to `true` removes the need for user submissions to `flush()` their output stream to guarantee that the `grader` receives their response. **The `unbuffered` node is not exclusive to interactive grading: it may be specified regardless of judging mode.**
 
-## Interactive Grading
+## Interactive grading
 
 Interactive grading is used for problems where users should implement an online algorithm or where the grader must generate input or compute a score based on the user's previous output.
 Using an interactive grader is similar to using a custom grader: the `custom_judge` node also needs to be set. Rewriting the previous custom judge using an interactive grader would result in:
@@ -113,8 +113,8 @@ class Grader(InteractiveGrader):
 - `interactor.read()` reads all of the submission's output available.
 - `interactor.readln(strip_newline=True)` reads the next line of the submission's output. If `strip_newline` is true, the trailing newline is stripped, otherwise it is retained.
 - `interactor.readtoken(delim=None)` reads the next available token of the submission's output, as determined by `string.split(delim)`.
-- `interactor.readint(lo=float('-inf'), hi=float('inf'), delim=None)` reads the next token of the submission's output, as determined by `string.split(delim)`. Additionally, the checker will automatically generate a wrong answer verdict if either the token cannot be converted to an integer, or if it is not in the range [*lo*, *hi*].
-- `interactor.readfloat(lo=float('-inf'), hi=float('inf'), delim=None)` reads the next token of the submission's output, as determined by `string.split(delim)`. Additionally, the checker will automatically generate a wrong answer verdict if either the token cannot be converted to a float, or if it is not in the range [*lo*, *hi*].
+- `interactor.readint(lo=float('-inf'), hi=float('inf'), delim=None)` reads the next token of the submission's output, as determined by `string.split(delim)`. Additionally, the checker will automatically generate a wrong answer verdict if either the token cannot be converted to an integer, or if it is not in the range <math><mo>[</mo><mi>lo</mi><mo>,</mo><mi>hi</mi><mo>]</mo></math>.
+- `interactor.readfloat(lo=float('-inf'), hi=float('inf'), delim=None)` reads the next token of the submission's output, as determined by `string.split(delim)`. Additionally, the checker will automatically generate a wrong answer verdict if either the token cannot be converted to a float, or if it is not in the range <math><mo>[</mo><mi>lo</mi><mo>,</mo><mi>hi</mi><mo>]</mo></math>.
 - `interactor.write(val)` writes `val`, cast to a string, to the submission's standard input.
 - `interactor.writeln(val)` writes `val`, cast to a string, to the submission's standard input, followed by a newline.
 - `interactor.close()` closes the submission's `stdin` stream.
@@ -123,7 +123,7 @@ class Grader(InteractiveGrader):
 
 Either a boolean or a `Result` (`from dmoj.result import Result`) object. The boolean is `True` if the submission should score full points, and `False` otherwise. The `Result` object is handled the same way as custom graders.
 
-## Native Interactive Grading
+## Native interactive grading
 
 Sometimes, an interactive grader will be very computationally expensive.
 In these cases, one can use the `bridged` grader.
@@ -141,8 +141,8 @@ Optional arguments are:
   - The `default` type passes the arguments in the order `input_file judge_file`. A return code of `0` is an AC, `1` is a WA, and anything else results in an internal error.
   - The `testlib` type passes the arguments in the order `input_file output_file judge_file`.
   Note that `output_file` will always be `/dev/null`, and is passed to maintain compatibility with `testlib.h`. A return code of `0` is an AC, `1` is a WA, `2` is a presentation error, `3` corresponds to an assertion failing,
-  and `7`, along with an output to `stderr` of the format `points X` for an integer ~X~ awards ~X~ points. Anything else results in an internal error.
-  - The `coci` type passes the arguments in the order `input_file judge_file`. Its parsing of return codes is the same as the `testlib` type, but has partial format `partial X/Y`, which awards ~\frac X Y~ of the points.
+  and `7`, along with an output to `stderr` of the format `points X` for an integer <math><mi>X</mi></math> awards <math><mi>X</mi></math> points. Anything else results in an internal error.
+  - The `coci` type passes the arguments in the order `input_file judge_file`. Its parsing of return codes is the same as the `testlib` type, but has partial format `partial X/Y`, which awards <math><mfrac><mi>X</mi><mi>Y</mi></mfrac></math> of the points.
   - The `peg` type exists for compatibility with the WCIPEG judge, and is not meant to be used here.
 
 The interactor's standard input is connected to the submission's standard output, and vice versa.
@@ -204,7 +204,7 @@ int main(int argc, char *argv[]) {
 }
 ```
 
-## Function Signature Grading (IOI-style)
+## Function signature grading (IOI-style)
 
 Signature grading is used for problems where users should implement an online algorithm or interact with the grader directly without the need for traditional input and output routines. This is commonly seen in competitions such as the IOI, where all input is passed through function arguments and output is replaced with return values or directly modifying specifically allocated memory for the computed answer.
 

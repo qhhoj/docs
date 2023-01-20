@@ -1,4 +1,4 @@
-# PDF Generation of Problem Statements
+# PDF generation of problem statements
 
 !> Untested on VNOJ
 

@@ -1,4 +1,4 @@
-# User Data Downloads
+# User data downloads
 
 The VNOJ allows users to download their data. At the time of writing, only user comment and submission data can be downloaded.
 

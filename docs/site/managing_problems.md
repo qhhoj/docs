@@ -1,9 +1,9 @@
-# Managing Problems Through the Site Interface
+# Managing problems through the site interface
 
 The VNOJ comes with an online interface for creating and editing problem statements as well as data.
 This guide is intended as an introduction to using these features for creating your own problems.
 
-## Adding a Problem
+## Adding a problem
 
 To start, head to [/admin/](https://dmoj.ca/admin/) and use your credentials to log in.
 Once there, click the _Add_ button on the _Problems_ menu.
@@ -22,12 +22,13 @@ its content into your editor).
 There are many options controlling your problem described in the editor, that you may use to customize the execution of your problem.
 
 Once you are done preparing your statement, click the _Save_ button, then scroll up to the top of the page and
-click the _View on Site_ button.
+click the _View on site_ button.
 
 ![](https://i.imgur.com/ZgO5xcY.png)
 
-## Editing Test Data
-Internally, the VNOJ uses a YAML-based format for describing problem data, which you may read about [here](/problem_format/problem_format.md).
+## Editing test data
+
+Internally, the VNOJ uses a YAML-based format for describing problem data, which you may read about [here](/problem_format/problem_format.md#problem-format).
 The site provides an interface for managing problem data, removing the need to drop down to YAML configuration for most problems.
 
 On the problem page, click the _Edit test data_ link to open up the test data editor.
@@ -52,9 +53,9 @@ sum of the point values of the cases they got right divided by the total sum of 
 points the problem is worth.
 
 For example, if your problem is worth 100 points and has 3 cases weighted 1/2/7 points respectively, a user who gets the first
-two cases correct and then fails the last one will have a score of (1 + 2) / (1 + 2 + 7) &times; 100 = 30 points, out of 100.
+two cases correct and then fails the last one will have a score of <math><mfrac><mrow><mn>1</mn><mo>+</mo><mn>2</mn><mo>+</mo><mn>0</mn></mrow><mrow><mn>1</mn><mo>+</mo><mn>2</mn><mo>+</mo><mn>7</mn></mrow></mfrac><mo>&times;</mo><mn>100</mn><mo>=</mo><mn>30</mn></math> points, out of 100.
 
-## Submitting to a Problem
+## Submitting to a problem
 
 After you have created your test data, you should head back to the problem and click the _Submit solution_ button. If at any point in
 time you need to update your data, you may do so from the test data editor, and it will update automatically.

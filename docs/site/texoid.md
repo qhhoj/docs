@@ -1,4 +1,4 @@
-# LaTeX Diagrams with Texoid
+# LaTeX diagrams with Texoid
 
 !> Untested on VNOJ
 
@@ -72,7 +72,7 @@ TEXOID_CACHE_URL = '//example.com/texoid/'
 
 Restart DMOJ for the changes to take effect. After restarting, you may have to purge Django's cache before seeing any changes.
 
-## Using LaTeX Diagrams in Problem Statements
+## Using LaTeX diagrams in problem statements
 
 To invoke Texoid to generate LaTeX diagrams, wrap your LaTeX code in `<latex>` blocks.
 
