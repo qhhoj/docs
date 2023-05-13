@@ -1,9 +1,10 @@
-# LaTeX math with Wikimedia Mathoid
+# Rendering LaTeX math in problem statements
 
 !> Untested on VNOJ
 
-The DMOJ platform is capable of rendering LaTeX math for constraints and formulas that may appear in problem statements. For example,
-[this problem](https://dmoj.ca/problem/fibonacci) makes extensive use of this functionality to present crisp math rendering in browsers.
+The DMOJ platform is capable of rendering LaTeX math for constraints and formulas that may appear in problem statements.
+For example, [this problem](https://dmoj.ca/problem/fibonacci) makes extensive use of this functionality to present
+crisp math rendering in browsers.
 
 The DMOJ makes use of the [Wikimedia Mathoid](https://github.com/wikimedia/mathoid) project to render math.
 
@@ -18,11 +19,13 @@ Assuming Mathoid is installed, configuring DMOJ to generate math with it require
 to `local_settings.py`.
 
 ```python
-# The URL Mathoid is running on
+# The URL Mathoid is running on.
 MATHOID_URL = 'http://localhost:8888'
+
 # A directory accessible by the user running Mathoid, as well as the web (nginx) user.
-# For optimal performance, change this to something more persistent than /tmp
+# For optimal performance, change this to something more persistent than /tmp.
 MATHOID_CACHE_ROOT = '/tmp/mathoid_cache'
+
 # The URL base MATHOID_CACHE_ROOT is configured to be served under in your webserver. For
 # example, if /tmp/mathoid_cache/render.png exists, example.com/mathoid/render.png should
 # serve it.

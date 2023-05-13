@@ -38,6 +38,7 @@ Now that you are done, you can start installing the site. First, create a virtua
 $ python3 -m venv vnojsite
 $ . vnojsite/bin/activate
 ```
+
 You should see `(vnojsite)` prepended to your shell. Henceforth, `(vnojsite)` commands assume you are in the code directory, with the virtual environment active.
 
 ?> The virtual environment will help keep the modules needed separate from the system package manager, and save you many headaches when updating. Read more about virtual environments [here](https://docs.python.org/3/tutorial/venv.html).
@@ -60,8 +61,8 @@ Install Python dependencies into the virtual environment.
 
 You will now need to configure `dmoj/local_settings.py`. You should make a copy of [this sample settings file](https://github.com/DMOJ/docs/blob/master/sample_files/local_settings.py) and read through it, making changes as necessary. Most importantly, you will want to update MariaDB credentials.
 
-?>  Leave debug mode on for now; we'll disable it later after we've verified that the site works. <br> <br>
-    Generally, it's recommended that you add your settings in `dmoj/local_settings.py` rather than modifying `dmoj/settings.py` directly. `settings.py` will automatically read `local_settings.py` and load it, so write your configuration there.
+?> Leave debug mode on for now; we'll disable it later after we've verified that the site works. <br> <br>
+Generally, it's recommended that you add your settings in `dmoj/local_settings.py` rather than modifying `dmoj/settings.py` directly. `settings.py` will automatically read `local_settings.py` and load it, so write your configuration there.
 
 Now, you should verify that everything is going according to plan.
 
@@ -70,6 +71,7 @@ Now, you should verify that everything is going according to plan.
 ```
 
 ## Compiling assets
+
 VNOJ uses `sass` and `autoprefixer` to generate the site stylesheets. VNOJ comes with a `make_style.sh` script that may be run to compile and optimize the stylesheets.
 
 ```shell-session
@@ -105,8 +107,8 @@ Next, load some initial data so that your install is not entirely blank.
 (vnojsite) $ python3 manage.py loaddata demo
 ```
 
-!>  Keep in mind that the `demo` fixture creates a superuser account with a username and password of `admin`. If your
-    site is exposed to others, you should change the user's password or remove the user entirely.
+!> Keep in mind that the `demo` fixture creates a superuser account with a username and password of `admin`. If your
+site is exposed to others, you should change the user's password or remove the user entirely.
 
 You should create an admin account with which to log in initially.
 
@@ -115,6 +117,7 @@ You should create an admin account with which to log in initially.
 ```
 
 ## Setting up Celery
+
 The VNOJ uses Celery workers to perform most of its heavy lifting, such as batch rescoring submissions. We will use Redis as its broker, though note that other brokers that Celery supports will work as well.
 
 Start up the Redis server, which is needed by the Celery workers.
@@ -137,8 +140,8 @@ At this point, you should attempt to run the server, and see if it all works.
 
 You should Ctrl-C to exit after verifying.
 
-!>  **Do not use `runserver` in production!** <br> <br>
-    We will set up a proper webserver using nginx and uWSGI soon.
+!> **Do not use `runserver` in production!** <br> <br>
+We will set up a proper webserver using nginx and uWSGI soon.
 
 You should also test to see if `bridged` runs.
 
@@ -209,8 +212,8 @@ $ apt install nginx
 
 You should copy the sample `nginx.conf` ([link](https://github.com/VNOI-Admin/vnoj-docs/blob/master/sample_files/nginx.conf)), edit it and place it in wherever it is supposed to be for your nginx install.
 
-?>  Typically, `nginx` site files are located in `/etc/nginx/conf.d`.
-    Some installations might place it at `/etc/nginx/sites-available` and require a symlink in `/etc/nginx/sites-enabled`.
+?> Typically, `nginx` site files are located in `/etc/nginx/conf.d`.
+Some installations might place it at `/etc/nginx/sites-available` and require a symlink in `/etc/nginx/sites-enabled`.
 
 Next, check if there are any issues with your nginx setup.
 
