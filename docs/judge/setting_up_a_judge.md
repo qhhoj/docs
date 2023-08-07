@@ -47,24 +47,28 @@ runtimes we run on [dmoj.ca](https://dmoj.ca). Tier 2 contains some in-between
 mix; read the `Dockerfile` for each tier for details. These images are rebuilt
 and tested every week to contain the latest runtime versions.
 
-The session below build a `judge-tier1`:
+?> VNOJ uses a custom tier, `tiervnoj`, which contains all the runtimes in Tier 1
+and some additional ones. You can find the list of supported runtimes [here](https://oj.vnoi.info/runtimes).
+
+The session below build a `judge-tiervnoj`:
 
 ```shell-session
 $ git clone --recursive https://github.com/VNOI-Admin/judge-server.git
 $ cd judge/.docker
-$ make judge-tier1
+$ make judge-tiervnoj
 ```
 
-The session below spawns a tier 1 judge image in the same server as the site server.
+The session below spawns a `tiervnoj` judge image in the same server as the site server.
 **It expects problems to be placed on the host under `/mnt/problems`, and judge-specific
 configuration to be in `/mnt/problems/judge.yml`.**
 
-Here is an example `judge.yml`:
+Your `judge.yml` file should look something like below:
+
 ```yaml
-id: Judge1
-key: a_random_key
-problem_storage_root:
-  - /problems
+id: <judge name>
+key: <judge authentication key>
+problem_storage_globs:
+  - /problems/*
 ```
 
 ```shell-session
@@ -75,14 +79,15 @@ $ docker run \
     --cap-add=SYS_PTRACE \
     -d \
     --restart=always \
-    vnoj/judge-tier1:latest \
-    run -p 9999 -c /problems/judge.yml localhost  -A 0.0.0.0  -a 12345
+    vnoj/judge-tiervnoj:latest \
+    run -p 9999 -c /problems/judge.yml localhost -A 0.0.0.0 -a 12345
 ```
 
 If you changed the port that was specified in `BRIDGED_JUDGE_ADDRESS` of the
 site's `local_settings.py`, you need to change the `-p 9999` to match the config as well
 
 If you want to run multiple judges, you need to changes:
+
 - Container name (`--name judge`): each judge need different name
 - judge.yml file (`/problems/judge.yml`): each judge need different config file
 - `-a 12345`: change to others ports
