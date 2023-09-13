@@ -67,12 +67,6 @@ You will now need to configure `dmoj/local_settings.py`. You should make a copy 
 ?> Leave debug mode on for now; we'll disable it later after we've verified that the site works. <br> <br>
 Generally, it's recommended that you add your settings in `dmoj/local_settings.py` rather than modifying `dmoj/settings.py` directly. `settings.py` will automatically read `local_settings.py` and load it, so write your configuration there.
 
-Now, you should verify that everything is going according to plan.
-
-```shell-session
-(vnojsite) $ python3 manage.py check
-```
-
 ## Compiling assets
 
 VNOJ uses `sass` and `autoprefixer` to generate the site stylesheets. VNOJ comes with a `make_style.sh` script that may be run to compile and optimize the stylesheets.
@@ -134,6 +128,12 @@ Configure `local_settings.py` by uncommenting `CELERY_BROKER_URL` and `CELERY_RE
 We will test that Celery works soon.
 
 ## Running the server
+
+Now, you should verify that everything is going according to plan.
+
+```shell-session
+(vnojsite) $ python3 manage.py check
+```
 
 At this point, you should attempt to run the server, and see if it all works.
 
