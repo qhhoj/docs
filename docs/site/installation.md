@@ -53,7 +53,6 @@ Install Python dependencies into the virtual environment.
 
 ```shell-session
 (vnojsite) $ pip3 install -r requirements.txt
-(vnojsite) $ pip3 install mysqlclient
 ```
 
 Install Node.js packages:
