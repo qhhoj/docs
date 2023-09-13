@@ -7,7 +7,6 @@ $ apt update
 $ apt install git gcc g++ make python3-dev python3-pip libxml2-dev libxslt1-dev zlib1g-dev gettext curl redis-server
 $ curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
 $ apt install nodejs
-$ npm install -g sass postcss-cli postcss autoprefixer
 ```
 
 ## Creating the database
@@ -46,10 +45,8 @@ You should see `(vnojsite)` prepended to your shell. Henceforth, `(vnojsite)` co
 Now, fetch the site source code:
 
 ```shell-session
-(vnojsite) $ git clone https://github.com/VNOI-Admin/OJ.git
+(vnojsite) $ git clone --recursive https://github.com/VNOI-Admin/OJ.git site
 (vnojsite) $ cd site
-(vnojsite) $ git submodule init
-(vnojsite) $ git submodule update
 ```
 
 Install Python dependencies into the virtual environment.
@@ -57,6 +54,12 @@ Install Python dependencies into the virtual environment.
 ```shell-session
 (vnojsite) $ pip3 install -r requirements.txt
 (vnojsite) $ pip3 install mysqlclient
+```
+
+Install Node.js packages:
+
+```shell-session
+(vnojsite) $ npm install
 ```
 
 You will now need to configure `dmoj/local_settings.py`. You should make a copy of [this sample settings file](https://github.com/DMOJ/docs/blob/master/sample_files/local_settings.py) and read through it, making changes as necessary. Most importantly, you will want to update MariaDB credentials.
@@ -235,21 +238,24 @@ If it does not work, check `nginx` logs and `uwsgi` log `stdout`/`stderr` for de
 
 ## Configuration of event server
 
-Create `config.js`. This assumes you use `nginx`, or there be dragons.
-You may need to shuffle ports if they are already used.
+Create `config.js` inside directory `websocket` with the following content:
 
-```shell-session
-(vnojsite) $ cat > websocket/config.js
-module.exports = {
-    get_host: '127.0.0.1',
-    get_port: 15100,
-    post_host: '127.0.0.1',
-    post_port: 15101,
-    http_host: '127.0.0.1',
-    http_port: 15102,
-    long_poll_timeout: 29000,
+```js
+const config = {
+  get_host: '127.0.0.1',
+  get_port: 15100,
+  post_host: '127.0.0.1',
+  post_port: 15101,
+  http_host: '127.0.0.1',
+  http_port: 15102,
+  long_poll_timeout: 29000
 };
+
+export default config;
 ```
+
+This assumes you use `nginx`, or there be dragons.
+You may need to shuffle ports if they are already used.
 
 `get_port` should be the same as the port for `/event/` in `nginx.conf`.
 `http_port` should be the same as the port for `/channels/` in `nginx.conf`.
@@ -260,7 +266,6 @@ You need to uncomment the relevant section in the `nginx` configuration.
 Need to install the dependencies.
 
 ```shell-session
-(vnojsite) $ npm install qu ws simplesets
 (vnojsite) $ pip3 install websocket-client
 ```
 
