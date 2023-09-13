@@ -78,14 +78,14 @@ VNOJ uses `sass` and `autoprefixer` to generate the site stylesheets. VNOJ comes
 Now, collect static files into `STATIC_ROOT` as specified in `dmoj/local_settings.py`.
 
 ```shell-session
-(vnojsite) $ python3 manage.py collectstatic
+(vnojsite) $ ./manage.py collectstatic
 ```
 
 You will also need to generate internationalization files.
 
 ```shell-session
-(vnojsite) $ python3 manage.py compilemessages
-(vnojsite) $ python3 manage.py compilejsi18n
+(vnojsite) $ ./manage.py compilemessages
+(vnojsite) $ ./manage.py compilejsi18n
 ```
 
 ## Setting up database tables
@@ -93,15 +93,15 @@ You will also need to generate internationalization files.
 We must generate the schema for the database, since it is currently empty.
 
 ```shell-session
-(vnojsite) $ python3 manage.py migrate
+(vnojsite) $ ./manage.py migrate
 ```
 
 Next, load some initial data so that your install is not entirely blank.
 
 ```shell-session
-(vnojsite) $ python3 manage.py loaddata navbar
-(vnojsite) $ python3 manage.py loaddata language_small
-(vnojsite) $ python3 manage.py loaddata demo
+(vnojsite) $ ./manage.py loaddata navbar
+(vnojsite) $ ./manage.py loaddata language_small
+(vnojsite) $ ./manage.py loaddata demo
 ```
 
 !> Keep in mind that the `demo` fixture creates a superuser account with a username and password of `admin`. If your
@@ -110,7 +110,7 @@ site is exposed to others, you should change the user's password or remove the u
 You should create an admin account with which to log in initially.
 
 ```shell-session
-(vnojsite) $ python3 manage.py createsuperuser
+(vnojsite) $ ./manage.py createsuperuser
 ```
 
 ## Setting up Celery
@@ -132,13 +132,13 @@ We will test that Celery works soon.
 Now, you should verify that everything is going according to plan.
 
 ```shell-session
-(vnojsite) $ python3 manage.py check
+(vnojsite) $ ./manage.py check
 ```
 
 At this point, you should attempt to run the server, and see if it all works.
 
 ```shell-session
-(vnojsite) $ python3 manage.py runserver 0.0.0.0:8000
+(vnojsite) $ ./manage.py runserver 0.0.0.0:8000
 ```
 
 You should Ctrl-C to exit after verifying.
@@ -149,7 +149,7 @@ We will set up a proper webserver using nginx and uWSGI soon.
 You should also test to see if `bridged` runs.
 
 ```shell-session
-(vnojsite) $ python3 manage.py runbridged
+(vnojsite) $ ./manage.py runbridged
 ```
 
 If there are no errors after about 10 seconds, it probably works.

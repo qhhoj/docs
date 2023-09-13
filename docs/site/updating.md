@@ -21,17 +21,17 @@ Dependencies may have changed since the last time you updated, so install any mi
 The database schema might also have changed, so update it.
 
 ```
-(vnojsite) $ python3 manage.py migrate
-(vnojsite) $ python3 manage.py check
+(vnojsite) $ ./manage.py migrate
+(vnojsite) $ ./manage.py check
 ```
 
 Finally, update any static files that may have changed.
 
 ```
 (vnojsite) $ ./make_style.sh
-(vnojsite) $ python3 manage.py collectstatic
-(vnojsite) $ python3 manage.py compilemessages
-(vnojsite) $ python3 manage.py compilejsi18n
+(vnojsite) $ ./manage.py collectstatic
+(vnojsite) $ ./manage.py compilemessages
+(vnojsite) $ ./manage.py compilejsi18n
 ```
 
 That's it! You may wish to condense the above steps into a script you can run at a later time.
