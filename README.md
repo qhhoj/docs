@@ -1,7 +1,5 @@
-# VNOJ Documentation
+# QHHOJ Documentation
 
-Documentation for the [VNOJ](https://github.com/VNOI-Admin/OJ) system.
+Documentation for the [QHHOJ](https://github.com/qhhoj/online-judge) system.
 
-VNOJ is based on [DMOJ](https://github.com/DMOJ/online-judge) and serves as the official online judge of [VNOI](https://vnoi.info/).
-
-Access the documentation at <https://vnoi-admin.github.io/vnoj-docs>.
+Access the documentation at <https://docs.qhhoj.com>.

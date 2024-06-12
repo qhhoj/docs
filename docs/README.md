@@ -1,5 +1,3 @@
-# VNOJ: Modern Online Judge
+# QHHOJ - Mission Impossible
 
-This documentation aims to guide you through installing your own VNOJ instance.
-
-Feel free to reach out to us on [Discord](https://discord.gg/TDyYVyd) if you have any questions.
+This documentation aims to guide you through installing your own QHHOJ instance.
