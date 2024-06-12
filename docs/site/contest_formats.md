@@ -1,6 +1,6 @@
 # Contest formats
 
-The VNOJ ships with 6 contest formats by default: Default, IOI, Codechef IOI Ranklist (henceforth shortened to simply Legacy IOI), ECOO, AtCoder, and ICPC.
+The QHHOJ ships with 8 contest formats by default: Default, IOI, Codechef IOI Ranklist (henceforth shortened to simply Legacy IOI), ECOO, AtCoder, ICPC, VNOJ, and Ultimate.
 
 ## Default
 
@@ -63,3 +63,19 @@ The score is equal to the number of problems solved, and ties are broken firstly
 The penalty is specified by the `penalty` field, and defaults to 20 minutes.
 The penalty is equal to the number of incorrect submissions prior to the first correct submission, multiplied by the specified value, in minutes, and is added to the cumulative time.
 Note that the time penalty is applied to all problems with a non-zero score (this format will not automatically disable partial points).
+
+## VNOJ
+
+The `VNOJ` contest format is a custom contest format used by the [VNOJ (VNOI Online Judge)](https://oj.vnoi.info).
+
+The score is equal to the sum of the highest-scoring submission on each problem, and ties are broken by the sum of the last score altering submission time on problems with a non-zero score (including penalty), followed by the time of the last score altering submission.
+
+Each submission before the first maximum score submission will incur a penalty of 5 minutes.
+
+## Ultimate
+
+The `Ultimate` contest format is a custom contest format used by the QHHOJ.
+
+The score is equal to the score of the last submission on each problem, and ties are broken by the sum of the last submission time for each problem.
+
+It is recommended to use the `Ultimate` contest format with a specific submission limit for each problem.
