@@ -36,8 +36,8 @@ CACHES = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'dmoj',
-        'USER': 'dmoj',
+        'NAME': 'qhhoj',
+        'USER': 'admin',
         'PASSWORD': '<mariadb user password>',
         'HOST': '127.0.0.1',
         'OPTIONS': {
@@ -110,7 +110,7 @@ ADMINS = (
 )
 
 # The sender for the aforementioned emails.
-SERVER_EMAIL = 'VNOJ: VNOI Online Judge <vnoj@vnoi.info>'
+SERVER_EMAIL = 'QHHOJ - Mission Impossible <qhhoj@qhhoj.com>'
 
 
 ################################################
@@ -136,11 +136,11 @@ STATIC_ROOT = '/tmp/static'
 ############################################
 
 ## DMOJ site display settings.
-SITE_NAME = 'VNOJ'
-SITE_FULL_URL = 'https://oj.vnoi.info'
-SITE_LONG_NAME = 'VNOJ: VNOI Online Judge'
+SITE_NAME = 'QHHOJ'
+SITE_FULL_URL = 'https://qhhoj.com'
+SITE_LONG_NAME = 'QHHOJ - Mission Impossible'
 SITE_ADMIN_EMAIL = 'admin@example.com'
-TERMS_OF_SERVICE_URL = '//oj.vnoi.info/tos/'  # Use a flatpage.
+TERMS_OF_SERVICE_URL = ''  # Use a flatpage.
 
 ## Media files settings.
 # This is the directory where all the media files are stored.

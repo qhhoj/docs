@@ -11,7 +11,7 @@ $ apt install nodejs
 
 ## Creating the database
 
-Next, we will set up the database using MariaDB. The VNOJ is only tested to work with MySQL, and it is unlikely to work with anything else. Please visit [the MariaDB site](https://mariadb.org/download/?t=repo-config) and follow the download instructions.
+Next, we will set up the database using MariaDB. The QHHOJ is only tested to work with MySQL, and it is unlikely to work with anything else. Please visit [the MariaDB site](https://mariadb.org/download/?t=repo-config) and follow the download instructions.
 
 When asked, you should select the latest MariaDB version.
 
@@ -24,72 +24,73 @@ The next step is to set up the database itself. You should execute the commands 
 
 ```shell-session
 $ sudo mysql
-mariadb> CREATE DATABASE dmoj DEFAULT CHARACTER SET utf8mb4 DEFAULT COLLATE utf8mb4_general_ci;
-mariadb> GRANT ALL PRIVILEGES ON dmoj.* TO 'dmoj'@'localhost' IDENTIFIED BY '<mariadb user password>';
+mariadb> CREATE DATABASE qhhoj DEFAULT CHARACTER SET utf8mb4 DEFAULT COLLATE utf8mb4_general_ci;
+mariadb> GRANT ALL PRIVILEGES ON qhhoj.* TO 'admin'@'localhost' IDENTIFIED BY '<mariadb user password>';
 mariadb> exit
+$ mariadb-tzinfo-to-sql /usr/share/zoneinfo | sudo mariadb -u root mysql  # Add time zone data to the database. A few pages require this.
 ```
 
 ## Installing prerequisites
 
-Now that you are done, you can start installing the site. First, create a virtual environment and activate it. Here, we'll create a virtual environment named `vnojsite`.
+Now that you are done, you can start installing the site. First, create a virtual environment and activate it. Here, we'll create a virtual environment named `qhhojsite`.
 
 ```shell-session
-$ python3 -m venv vnojsite
-$ . vnojsite/bin/activate
+$ python3 -m venv qhhojsite
+$ . qhhojsite/bin/activate
 ```
 
-You should see `(vnojsite)` prepended to your shell. Henceforth, `(vnojsite)` commands assume you are in the code directory, with the virtual environment active.
+You should see `(qhhojsite)` prepended to your shell. Henceforth, `(qhhojsite)` commands assume you are in the code directory, with the virtual environment active.
 
 ?> The virtual environment will help keep the modules needed separate from the system package manager, and save you many headaches when updating. Read more about virtual environments [here](https://docs.python.org/3/tutorial/venv.html).
 
 Now, fetch the site source code:
 
 ```shell-session
-(vnojsite) $ git clone --recursive https://github.com/VNOI-Admin/OJ.git site
-(vnojsite) $ cd site
+(qhhojsite) $ git clone --recursive https://github.com/qhhoj/online-judge.git site
+(qhhojsite) $ cd site
 ```
 
 Install Python dependencies into the virtual environment.
 
 ```shell-session
-(vnojsite) $ pip3 install -r requirements.txt
+(qhhojsite) $ pip3 install -r requirements.txt
 ```
 
 Install Node.js packages:
 
 ```shell-session
-(vnojsite) $ npm install
+(qhhojsite) $ npm install
 ```
 
-You will now need to configure `dmoj/local_settings.py`. You should make a copy of [this sample settings file](https://github.com/VNOI-Admin/vnoj-docs/blob/master/sample_files/local_settings.py) and read through it, making changes as necessary. Most importantly, you will want to update MariaDB credentials.
+You will now need to configure `dmoj/local_settings.py`. You should make a copy of [this sample settings file](https://github.com/qhhoj/docs/blob/master/sample_files/local_settings.py) and read through it, making changes as necessary. Most importantly, you will want to update MariaDB credentials.
 
 ?> Leave debug mode on for now; we'll disable it later after we've verified that the site works. <br> <br>
 Generally, it's recommended that you add your settings in `dmoj/local_settings.py` rather than modifying `dmoj/settings.py` directly. `settings.py` will automatically read `local_settings.py` and load it, so write your configuration there.
 
 ## Compiling assets
 
-VNOJ uses `sass` and `autoprefixer` to generate the site stylesheets. VNOJ comes with a `make_style.sh` script that may be run to compile and optimize the stylesheets.
+QHHOJ uses `sass` and `autoprefixer` to generate the site stylesheets. QHHOJ comes with a `make_style.sh` script that may be run to compile and optimize the stylesheets.
 
 ```shell-session
-(vnojsite) $ ./make_style.sh
+(qhhojsite) $ ./make_style.sh
 ```
 
 Now, collect static files into `STATIC_ROOT` as specified in `dmoj/local_settings.py`.
 
 ```shell-session
-(vnojsite) $ ./manage.py collectstatic
+(qhhojsite) $ ./manage.py collectstatic
 ```
 
 You will also need to generate internationalization files.
 
 ```shell-session
-(vnojsite) $ ./manage.py compilemessages
-(vnojsite) $ ./manage.py compilejsi18n
+(qhhojsite) $ ./manage.py compilemessages
+(qhhojsite) $ ./manage.py compilejsi18n
 ```
 
 ## Setting up Celery
 
-The VNOJ uses Celery workers to perform most of its heavy lifting, such as batch rescoring submissions. We will use Redis as its broker, though note that other brokers that Celery supports will work as well.
+The QHHOJ uses Celery workers to perform most of its heavy lifting, such as batch rescoring submissions. We will use Redis as its broker, though note that other brokers that Celery supports will work as well.
 
 Start up the Redis server, which is needed by the Celery workers.
 
@@ -99,22 +100,20 @@ $ service redis-server start
 
 Configure `local_settings.py` by uncommenting `CELERY_BROKER_URL` and `CELERY_RESULT_BACKEND`. By default, Redis listens on localhost port 6379, which is reflected in `local_settings.py`. You will need to update the addresses if you changed Redis's settings.
 
-We will test that Celery works soon.
-
 ## Setting up database tables
 
 We must generate the schema for the database, since it is currently empty.
 
 ```shell-session
-(vnojsite) $ ./manage.py migrate
+(qhhojsite) $ ./manage.py migrate
 ```
 
 Next, load some initial data so that your install is not entirely blank.
 
 ```shell-session
-(vnojsite) $ ./manage.py loaddata navbar
-(vnojsite) $ ./manage.py loaddata language_small
-(vnojsite) $ ./manage.py loaddata demo
+(qhhojsite) $ ./manage.py loaddata navbar
+(qhhojsite) $ ./manage.py loaddata language_small
+(qhhojsite) $ ./manage.py loaddata demo
 ```
 
 !> Keep in mind that the `demo` fixture creates a superuser account with a username and password of `admin`. If your
@@ -123,7 +122,7 @@ site is exposed to others, you should change the user's password or remove the u
 You should create an admin account with which to log in initially.
 
 ```shell-session
-(vnojsite) $ ./manage.py createsuperuser
+(qhhojsite) $ ./manage.py createsuperuser
 ```
 
 ## Running the server
@@ -131,13 +130,13 @@ You should create an admin account with which to log in initially.
 Now, you should verify that everything is going according to plan.
 
 ```shell-session
-(vnojsite) $ ./manage.py check
+(qhhojsite) $ ./manage.py check
 ```
 
 At this point, you should attempt to run the server, and see if it all works.
 
 ```shell-session
-(vnojsite) $ ./manage.py runserver 0.0.0.0:8000
+(qhhojsite) $ ./manage.py runserver 0.0.0.0:8000
 ```
 
 You should Ctrl-C to exit after verifying.
@@ -148,7 +147,7 @@ We will set up a proper webserver using nginx and uWSGI soon.
 You should also test to see if `bridged` runs.
 
 ```shell-session
-(vnojsite) $ ./manage.py runbridged
+(qhhojsite) $ ./manage.py runbridged
 ```
 
 If there are no errors after about 10 seconds, it probably works.
@@ -157,7 +156,7 @@ You should Ctrl-C to exit.
 Next, test that the Celery workers run.
 
 ```shell-session
-(vnojsite) $ celery -A dmoj_celery worker
+(qhhojsite) $ celery -A dmoj_celery worker
 ```
 
 You can Ctrl-C to exit.
@@ -168,18 +167,18 @@ You can Ctrl-C to exit.
 In the rest of this guide, we will be installing `uwsgi` and `nginx` to serve the site, using `supervisord`
 to keep `site` and `bridged` running. It's likely other configurations may work, but they are unsupported.
 
-First, copy our `uwsgi.ini` ([link](https://github.com/VNOI-Admin/vnoj-docs/blob/master/sample_files/uwsgi.ini)). You should change the paths to reflect your install.
+First, copy our `uwsgi.ini` ([link](https://github.com/qhhoj/docs/blob/master/sample_files/uwsgi.ini)). You should change the paths to reflect your install.
 
 You need to install `uwsgi`.
 
 ```shell-session
-(vnojsite) $ pip3 install uwsgi
+(qhhojsite) $ pip3 install uwsgi
 ```
 
 To test, run:
 
 ```shell-session
-(vnojsite) $ uwsgi --ini uwsgi.ini
+(qhhojsite) $ uwsgi --ini uwsgi.ini
 ```
 
 If it says workers are spawned, it probably works.
@@ -193,7 +192,7 @@ You should now install `supervisord` and configure it.
 $ apt install supervisor
 ```
 
-Copy our `site.conf` ([link](https://github.com/VNOI-Admin/vnoj-docs/blob/master/sample_files/site.conf)) to `/etc/supervisor/conf.d/site.conf`, `bridged.conf` ([link](https://github.com/VNOI-Admin/vnoj-docs/blob/master/sample_files/bridged.conf)) to `/etc/supervisor/conf.d/bridged.conf`, `celery.conf` ([link](https://github.com/VNOI-Admin/vnoj-docs/blob/master/sample_files/celery.conf)) to `/etc/supervisor/conf.d/celery.conf` and fill in the fields.
+Copy our `site.conf` ([link](https://github.com/qhhoj/docs/blob/master/sample_files/site.conf)) to `/etc/supervisor/conf.d/site.conf`, `bridged.conf` ([link](https://github.com/qhhoj/docs/blob/master/sample_files/bridged.conf)) to `/etc/supervisor/conf.d/bridged.conf`, `celery.conf` ([link](https://github.com/qhhoj/docs/blob/master/sample_files/celery.conf)) to `/etc/supervisor/conf.d/celery.conf` and fill in the fields.
 
 Next, reload `supervisord` and check that the site, bridged, and celery have started.
 
@@ -212,7 +211,7 @@ Now, it's time to set up `nginx`.
 $ apt install nginx
 ```
 
-You should copy the sample `nginx.conf` ([link](https://github.com/VNOI-Admin/vnoj-docs/blob/master/sample_files/nginx.conf)), edit it and place it in wherever it is supposed to be for your nginx install.
+You should copy the sample `nginx.conf` ([link](https://github.com/qhhoj/docs/blob/master/sample_files/nginx.conf)), edit it and place it in wherever it is supposed to be for your nginx install.
 
 ?> Typically, `nginx` site files are located in `/etc/nginx/conf.d`.
 Some installations might place it at `/etc/nginx/sites-available` and require a symlink in `/etc/nginx/sites-enabled`.
@@ -265,10 +264,10 @@ You need to uncomment the relevant section in the `nginx` configuration.
 Need to install the dependencies.
 
 ```shell-session
-(vnojsite) $ pip3 install websocket-client
+(qhhojsite) $ pip3 install websocket-client
 ```
 
-Now copy `wsevent.conf` ([link](https://github.com/VNOI-Admin/vnoj-docs/blob/master/sample_files/wsevent.conf)) to `/etc/supervisor/conf.d/wsevent.conf`, changing paths, and then update supervisor and nginx.
+Now copy `wsevent.conf` ([link](https://github.com/qhhoj/docs/blob/master/sample_files/wsevent.conf)) to `/etc/supervisor/conf.d/wsevent.conf`, changing paths, and then update supervisor and nginx.
 
 ```shell-session
 $ supervisorctl update
