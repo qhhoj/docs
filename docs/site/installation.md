@@ -54,6 +54,7 @@ Install Python dependencies into the virtual environment.
 
 ```shell-session
 (qhhojsite) $ pip3 install -r requirements.txt
+(qhhojsite) $ pip3 install -r additional_requirements.txt
 ```
 
 Install Node.js packages:
@@ -70,6 +71,11 @@ Generally, it's recommended that you add your settings in `dmoj/local_settings.p
 ## Compiling assets
 
 QHHOJ uses `sass` and `autoprefixer` to generate the site stylesheets. QHHOJ comes with a `make_style.sh` script that may be run to compile and optimize the stylesheets.
+
+We need to install a dependency: 
+```shell-session
+(qhhojsite) $ pip3 install websocket-client
+```
 
 ```shell-session
 (qhhojsite) $ ./make_style.sh
@@ -260,12 +266,6 @@ You may need to shuffle ports if they are already used.
 `post_port` should be the same as the port in `EVENT_DAEMON_POST` in `local_settings`.
 You need to configure `EVENT_DAEMON_GET` and `EVENT_DAEMON_POLL`.
 You need to uncomment the relevant section in the `nginx` configuration.
-
-Need to install the dependencies.
-
-```shell-session
-(qhhojsite) $ pip3 install websocket-client
-```
 
 Now copy `wsevent.conf` ([link](https://github.com/qhhoj/docs/blob/master/sample_files/wsevent.conf)) to `/etc/supervisor/conf.d/wsevent.conf`, changing paths, and then update supervisor and nginx.
 
