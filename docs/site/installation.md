@@ -72,11 +72,6 @@ Generally, it's recommended that you add your settings in `dmoj/local_settings.p
 
 QHHOJ uses `sass` and `autoprefixer` to generate the site stylesheets. QHHOJ comes with a `make_style.sh` script that may be run to compile and optimize the stylesheets.
 
-We need to install a dependency: 
-```shell-session
-(qhhojsite) $ pip3 install websocket-client
-```
-
 ```shell-session
 (qhhojsite) $ ./make_style.sh
 ```
