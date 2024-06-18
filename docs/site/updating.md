@@ -14,6 +14,7 @@ First, switch to the site virtual environment, and pull the latest changes.
 Dependencies may have changed since the last time you updated, so install any missing ones now.
 
 ```
+(qhhojsite) $ npm install
 (qhhojsite) $ pip3 install -r requirements.txt
 ```
 
