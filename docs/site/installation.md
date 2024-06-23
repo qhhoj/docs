@@ -3,10 +3,10 @@
 ## Installing the prerequisites
 
 ```shell-session
-$ apt update
-$ apt install git gcc g++ make python3-dev python3-pip python3-venv libxml2-dev libxslt1-dev zlib1g-dev gettext curl redis-server pkg-config
+$ sudo apt update
+$ sudo apt install git gcc g++ make python3-dev python3-pip python3-venv libxml2-dev libxslt1-dev zlib1g-dev gettext curl redis-server pkg-config
 $ curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
-$ apt install nodejs
+$ sudo apt install nodejs
 ```
 
 ## Creating the database
@@ -16,8 +16,8 @@ Next, we will set up the database using MariaDB. The QHHOJ is only tested to wor
 When asked, you should select the latest MariaDB version.
 
 ```shell-session
-$ apt update
-$ apt install mariadb-server libmysqlclient-dev
+$ sudo apt update
+$ sudo apt install mariadb-server libmysqlclient-dev
 ```
 
 The next step is to set up the database itself. You should execute the commands listed below to create the necessary database and user.
@@ -27,7 +27,7 @@ $ sudo mysql
 mariadb> CREATE DATABASE qhhoj DEFAULT CHARACTER SET utf8mb4 DEFAULT COLLATE utf8mb4_general_ci;
 mariadb> GRANT ALL PRIVILEGES ON qhhoj.* TO 'admin'@'localhost' IDENTIFIED BY '<mariadb user password>';
 mariadb> exit
-$ mariadb-tzinfo-to-sql /usr/share/zoneinfo | sudo mariadb -u root mysql  # Add time zone data to the database. A few pages require this.
+$ mariadb-tzinfo-to-sql /usr/share/zoneinfo | sudo mariadb -u admin qhhoj  # Add time zone data to the database. A few pages require this.
 ```
 
 ## Installing prerequisites
@@ -96,7 +96,7 @@ The QHHOJ uses Celery workers to perform most of its heavy lifting, such as batc
 Start up the Redis server, which is needed by the Celery workers.
 
 ```shell-session
-$ service redis-server start
+$ sudo service redis-server start
 ```
 
 Configure `local_settings.py` by uncommenting `CELERY_BROKER_URL` and `CELERY_RESULT_BACKEND`. By default, Redis listens on localhost port 6379, which is reflected in `local_settings.py`. You will need to update the addresses if you changed Redis's settings.
@@ -190,7 +190,7 @@ You should Ctrl-C to exit.
 You should now install `supervisord` and configure it.
 
 ```shell-session
-$ apt install supervisor
+$ sudo apt install supervisor
 ```
 
 Copy our `site.conf` ([link](https://github.com/qhhoj/docs/blob/master/sample_files/site.conf)) to `/etc/supervisor/conf.d/site.conf`, `bridged.conf` ([link](https://github.com/qhhoj/docs/blob/master/sample_files/bridged.conf)) to `/etc/supervisor/conf.d/bridged.conf`, `celery.conf` ([link](https://github.com/qhhoj/docs/blob/master/sample_files/celery.conf)) to `/etc/supervisor/conf.d/celery.conf` and fill in the fields.
@@ -198,8 +198,8 @@ Copy our `site.conf` ([link](https://github.com/qhhoj/docs/blob/master/sample_fi
 Next, reload `supervisord` and check that the site, bridged, and celery have started.
 
 ```shell-session
-$ supervisorctl update
-$ supervisorctl status
+$ sudo supervisorctl update
+$ sudo supervisorctl status
 ```
 
 If all three processes are running, everything is good! Otherwise, peek at the logs and see what's wrong.
@@ -209,7 +209,7 @@ If all three processes are running, everything is good! Otherwise, peek at the l
 Now, it's time to set up `nginx`.
 
 ```shell-session
-$ apt install nginx
+$ sudo apt install nginx
 ```
 
 You should copy the sample `nginx.conf` ([link](https://github.com/qhhoj/docs/blob/master/sample_files/nginx.conf)), edit it and place it in wherever it is supposed to be for your nginx install.
@@ -226,7 +226,7 @@ $ nginx -t
 If not, reload the `nginx` configuration.
 
 ```shell-session
-$ service nginx reload
+$ sudo service nginx reload
 ```
 
 You should be good to go. Visit the site at where you set it up to verify.
@@ -265,8 +265,7 @@ You need to uncomment the relevant section in the `nginx` configuration.
 Now copy `wsevent.conf` ([link](https://github.com/qhhoj/docs/blob/master/sample_files/wsevent.conf)) to `/etc/supervisor/conf.d/wsevent.conf`, changing paths, and then update supervisor and nginx.
 
 ```shell-session
-$ supervisorctl update
-$ supervisorctl restart bridged
-$ supervisorctl restart site
-$ service nginx restart
+$ sudo supervisorctl update
+$ sudo supervisorctl restart all
+$ sudo service nginx restart
 ```
