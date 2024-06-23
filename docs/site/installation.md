@@ -27,7 +27,7 @@ $ sudo mysql
 mariadb> CREATE DATABASE qhhoj DEFAULT CHARACTER SET utf8mb4 DEFAULT COLLATE utf8mb4_general_ci;
 mariadb> GRANT ALL PRIVILEGES ON qhhoj.* TO 'admin'@'localhost' IDENTIFIED BY '<mariadb user password>';
 mariadb> exit
-$ mariadb-tzinfo-to-sql /usr/share/zoneinfo | sudo mariadb -u admin qhhoj  # Add time zone data to the database. A few pages require this.
+$ mariadb-tzinfo-to-sql /usr/share/zoneinfo | sudo mariadb -u root mysql  # Add time zone data to the database. A few pages require this.
 ```
 
 ## Installing prerequisites
