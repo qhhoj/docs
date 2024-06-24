@@ -37,7 +37,7 @@ Install [ChromeDriver](https://chromedriver.chromium.org/downloads), a special v
 
 ```shell-session
 $ python3
-Python 3.12.4 (main, Jun  6 2024, 18:26:44) [Clang 15.0.0 (clang-1500.3.9.4)] on darwin
+Python 3.12.4 (main, Jun  6 2024, 18:26:44) [GCC 11.4.0] on linux
 Type "help", "copyright", "credits" or "license" for more information.
 >>> from selenium import webdriver
 >>> import chromedriver_autoinstaller
@@ -45,7 +45,7 @@ Type "help", "copyright", "credits" or "license" for more information.
 '/path/to/pdfoid/env/lib/python3.10/site-packages/chromedriver_autoinstaller/120/chromedriver'
 ```
 
-Finally, type `exit()` or press Ctrl + D to exit the python3 command. Please make sure to take a note of the output path of the `chromedriver` binary for later.  
+Finally, type `exit()` or press Ctrl + D to exit the `python3` command. Please make sure to take a note of the output path of the `chromedriver` binary for later.  
 
 ## Running Pdfoid
 
