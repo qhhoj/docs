@@ -76,7 +76,7 @@ $ curl -d "title=QHHOJ&html=Welcome to QHHOJ!" -X POST -H "Content-Type: applica
 }
 ```
 
-?>  PDFs statements rendered by QHHOJ uses the Lato font by default. Therefore, installing the Lato font on the machine running Pdfoid will provide optimal rendering quality &mdash; otherwise, a fallback font will be used and statements will look subpar.
+?>  PDF statements rendered by QHHOJ uses the Lato font by default. Therefore, installing the Lato font on the machine running Pdfoid will provide optimal rendering quality &mdash; otherwise, a fallback font will be used and statements will look subpar.
 
 ## Configuration
 
